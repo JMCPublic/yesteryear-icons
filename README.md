@@ -1,6 +1,6 @@
 # Yesteryear Icons 🎬
 
-A private, password-protected glamour gallery — nostalgic icons from a bygone era.
+Icons from a bygone era.
 
 Live at: **https://jmcpublic.github.io/yesteryear-icons/**
 

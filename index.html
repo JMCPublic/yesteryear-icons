@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Yesteryear Icons</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400&display=swap');
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --gold: #c9a84c;
+      --gold-light: #e8c97a;
+      --cream: #faf6ef;
+      --charcoal: #1a1a1a;
+      --muted: #6b6256;
+      --card-bg: #fff9f0;
+    }
+
+    body { font-family: 'Lato', sans-serif; background: var(--charcoal); color: var(--charcoal); min-height: 100vh; }
+
+    /* ── Lock Screen ── */
+    #lock-screen {
+      position: fixed; inset: 0; background: var(--charcoal);
+      display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 1000;
+      background-image:
+        radial-gradient(ellipse at 20% 50%, rgba(201,168,76,0.08) 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 50%, rgba(201,168,76,0.06) 0%, transparent 60%);
+    }
+    .lock-box {
+      background: rgba(255,255,255,0.04); border: 1px solid rgba(201,168,76,0.3);
+      border-radius: 4px; padding: 3rem 3.5rem; text-align: center;
+      width: min(420px, 92vw); backdrop-filter: blur(4px);
+    }
+    .lock-icon { font-size: 2.5rem; margin-bottom: 1.2rem; filter: drop-shadow(0 0 12px rgba(201,168,76,0.4)); }
+    .lock-title { font-family: 'Playfair Display', serif; font-size: 2rem; color: var(--gold-light); letter-spacing: 0.06em; margin-bottom: 0.4rem; }
+    .lock-subtitle { font-size: 0.8rem; color: rgba(255,255,255,0.35); letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 2.4rem; }
+    .lock-label { display: block; font-size: 0.72rem; color: rgba(255,255,255,0.4); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 0.7rem; text-align: left; }
+    .lock-input {
+      width: 100%; background: rgba(255,255,255,0.05); border: 1px solid rgba(201,168,76,0.25);
+      border-radius: 3px; color: var(--gold-light); font-size: 1.4rem; letter-spacing: 0.5em;
+      text-align: center; padding: 0.75rem 1rem; outline: none; transition: border-color 0.2s;
+      font-family: 'Lato', monospace; margin-bottom: 1.4rem;
+    }
+    .lock-input:focus { border-color: var(--gold); }
+    .lock-input.shake { animation: shake 0.4s ease; border-color: #c0392b !important; }
+    @keyframes shake {
+      0%,100% { transform: translateX(0); } 20% { transform: translateX(-8px); }
+      40% { transform: translateX(8px); } 60% { transform: translateX(-5px); } 80% { transform: translateX(5px); }
+    }
+    .lock-btn {
+      width: 100%; background: linear-gradient(135deg, var(--gold), var(--gold-light));
+      border: none; border-radius: 3px; color: var(--charcoal); font-family: 'Lato', sans-serif;
+      font-size: 0.8rem; letter-spacing: 0.2em; text-transform: uppercase; padding: 0.85rem;
+      cursor: pointer; transition: opacity 0.2s, transform 0.1s;
+    }
+    .lock-btn:hover { opacity: 0.88; } .lock-btn:active { transform: scale(0.98); }
+    .lock-error { margin-top: 1rem; font-size: 0.75rem; color: #e74c3c; letter-spacing: 0.1em; min-height: 1.1em; }
+    #lock-screen.unlocking { animation: fadeUp 0.6s ease forwards; }
+    @keyframes fadeUp { to { opacity: 0; transform: translateY(-30px); pointer-events: none; } }
+
+    /* ── Main Content ── */
+    #content { display: none; background: var(--cream); min-height: 100vh; }
+
+    .site-header {
+      background: var(--charcoal); padding: 2.4rem 2rem 2rem; text-align: center;
+      border-bottom: 1px solid rgba(201,168,76,0.3); position: relative;
+    }
+    .site-header .ornament { color: var(--gold); font-size: 0.85rem; letter-spacing: 0.5em; text-transform: uppercase; margin-bottom: 0.6rem; }
+    .site-header h1 { font-family: 'Playfair Display', serif; font-size: clamp(2.2rem, 5vw, 3.4rem); color: var(--gold-light); letter-spacing: 0.04em; line-height: 1.1; }
+    .site-header .tagline { font-size: 0.78rem; color: rgba(255,255,255,0.35); letter-spacing: 0.28em; text-transform: uppercase; margin-top: 0.8rem; }
+
+    .relock-btn {
+      position: absolute; top: 1.4rem; right: 1.6rem; background: none;
+      border: 1px solid rgba(201,168,76,0.3); border-radius: 3px; color: rgba(255,255,255,0.4);
+      font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase; padding: 0.4rem 0.8rem;
+      cursor: pointer; transition: all 0.2s;
+    }
+    .relock-btn:hover { color: var(--gold-light); border-color: var(--gold); }
+
+    .gallery-section { max-width: 1100px; margin: 0 auto; padding: 3rem 2rem 5rem; }
+    .section-label { font-size: 0.72rem; letter-spacing: 0.35em; text-transform: uppercase; color: var(--muted); text-align: center; margin-bottom: 2.5rem; }
+
+    .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 2rem; }
+
+    .card { background: var(--card-bg); border: 1px solid rgba(0,0,0,0.08); border-radius: 3px; overflow: hidden; transition: transform 0.25s, box-shadow 0.25s; }
+    .card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,0.1); }
+
+    .card-img {
+      width: 100%; aspect-ratio: 3/4; object-fit: cover; object-position: top;
+      display: block; background: #e8e0d5;
+    }
+    .card-body { padding: 1rem 1.1rem 1.2rem; }
+    .card-name { font-family: 'Playfair Display', serif; font-size: 1.05rem; color: var(--charcoal); margin-bottom: 0.15rem; }
+    .card-bio { font-size: 0.8rem; color: var(--muted); margin-top: 0.5rem; line-height: 1.6; min-height: 1.2em; }
+
+    /* Spinner */
+    .spinner-wrap { grid-column: 1/-1; display: flex; flex-direction: column; align-items: center; padding: 4rem; gap: 1rem; }
+    .spinner { width: 36px; height: 36px; border: 2px solid rgba(201,168,76,0.2); border-top-color: var(--gold); border-radius: 50%; animation: spin 0.8s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .spinner-text { font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); }
+
+    .empty-msg { grid-column: 1/-1; text-align: center; color: var(--muted); font-size: 0.9rem; padding: 4rem 2rem; line-height: 1.8; }
+    .empty-msg strong { color: var(--charcoal); }
+
+    .site-footer { text-align: center; padding: 1.5rem; font-size: 0.7rem; letter-spacing: 0.15em; color: var(--muted); border-top: 1px solid rgba(0,0,0,0.08); }
+  </style>
+</head>
+<body>
+
+  <!-- ── Lock Screen ── -->
+  <div id="lock-screen">
+    <div class="lock-box">
+      <div class="lock-icon">🔒</div>
+      <h1 class="lock-title">Yesteryear Icons</h1>
+      <p class="lock-subtitle">Private Collection</p>
+      <label class="lock-label" for="pin-input">Enter passcode</label>
+      <input id="pin-input" class="lock-input" type="password" maxlength="20" placeholder="••••" autocomplete="off" spellcheck="false" />
+      <button class="lock-btn" onclick="tryUnlock()">Enter</button>
+      <div class="lock-error" id="lock-error"></div>
+    </div>
+  </div>
+
+  <!-- ── Main Content ── -->
+  <div id="content">
+    <header class="site-header">
+      <p class="ornament">✦ &nbsp; A Nostalgic Gallery &nbsp; ✦</p>
+      <h1>Yesteryear Icons</h1>
+      <p class="tagline">Glamour of a Bygone Era</p>
+      <button class="relock-btn" onclick="reLock()">🔒 Lock</button>
+    </header>
+    <main class="gallery-section">
+      <p class="section-label">The Golden Age of Glamour</p>
+      <div class="gallery-grid" id="gallery-grid">
+        <div class="spinner-wrap">
+          <div class="spinner"></div>
+          <span class="spinner-text">Loading gallery…</span>
+        </div>
+      </div>
+    </main>
+    <footer class="site-footer">For personal nostalgia only &nbsp;·&nbsp; All images © their respective rights holders</footer>
+  </div>
+
+  <script>
+    // ─── CONFIGURATION ───────────────────────────────────────────────
+    const PASSCODE = "1950";   // ← change your passcode here if you like
+
+    // ─── LOCK / UNLOCK ───────────────────────────────────────────────
+    const input   = document.getElementById('pin-input');
+    const errEl   = document.getElementById('lock-error');
+    const lockEl  = document.getElementById('lock-screen');
+    const content = document.getElementById('content');
+
+    input.addEventListener('keydown', e => { if (e.key === 'Enter') tryUnlock(); });
+
+    function tryUnlock() {
+      errEl.textContent = '';
+      if (input.value === PASSCODE) {
+        lockEl.classList.add('unlocking');
+        lockEl.addEventListener('animationend', () => {
+          lockEl.style.display = 'none';
+          content.style.display = 'block';
+          loadGallery();
+        }, { once: true });
+      } else {
+        input.classList.remove('shake');
+        void input.offsetWidth;
+        input.classList.add('shake');
+        input.addEventListener('animationend', () => input.classList.remove('shake'), { once: true });
+        errEl.textContent = 'Incorrect passcode — try again';
+        input.value = '';
+        input.focus();
+      }
+    }
+
+    function reLock() {
+      content.style.display = 'none';
+      lockEl.style.display  = 'flex';
+      lockEl.style.animation = 'none';
+      lockEl.classList.remove('unlocking');
+      input.value = '';
+      errEl.textContent = '';
+      input.focus();
+    }
+
+    // ─── GITHUB AUTO-DETECTION ───────────────────────────────────────
+    // Reads the live URL to figure out which GitHub repo to scan.
+    // No config needed — just works once deployed to GitHub Pages.
+    function getGitHubContext() {
+      const host = window.location.hostname;
+      if (!host.endsWith('.github.io')) return null;
+      const owner = host.replace('.github.io', '');
+      const parts = window.location.pathname.split('/').filter(p => p && p !== 'index.html');
+      const repo  = parts.length > 0 ? parts[0] : `${owner}.github.io`;
+      return { owner, repo };
+    }
+
+    // ─── NAME LOGIC ──────────────────────────────────────────────────
+    // If the filename looks like a camera dump → "Seymore N"
+    // Otherwise use the filename (without extension) as the person's name.
+    const GENERIC = [
+      /^(img|dsc|dscn|dcim|photo|image|pic|picture|screenshot|untitled|file|download|pxl|signal|wp|whatsapp)[\s_\-]?\d*/i,
+      /^\d{4,}$/,        // pure numbers
+      /^[a-f0-9]{8,}$/i  // hex hashes
+    ];
+
+    let seymoreCount = 0;
+
+    function parseName(filename) {
+      const bare = filename
+        .replace(/\.[^.]+$/, '')   // strip extension
+        .replace(/[_\-]+/g, ' ')   // underscores/hyphens → spaces
+        .trim();
+
+      if (GENERIC.some(p => p.test(bare)) || bare.length < 3) {
+        seymoreCount++;
+        return { display: `Seymore ${seymoreCount}`, wikiName: null };
+      }
+
+      // Title-case the name
+      const display = bare.replace(/\b\w/g, c => c.toUpperCase());
+      return { display, wikiName: display };
+    }
+
+    // ─── WIKIPEDIA SHORT BIO ─────────────────────────────────────────
+    async function fetchBio(name) {
+      if (!name) return '';
+      try {
+        const r = await fetch(
+          `https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(name)}`,
+          { headers: { Accept: 'application/json' } }
+        );
+        if (!r.ok) return '';
+        const d = await r.json();
+        // First sentence only — keeps cards tidy
+        const sentence = (d.extract || '').split(/(?<=[.!?])\s/)[0] || '';
+        return sentence;
+      } catch { return ''; }
+    }
+
+    // ─── GALLERY LOADER ──────────────────────────────────────────────
+    async function loadGallery() {
+      const grid = document.getElementById('gallery-grid');
+      const ctx  = getGitHubContext();
+
+      if (!ctx) {
+        grid.innerHTML = `<p class="empty-msg">
+          This gallery needs to be hosted on <strong>GitHub Pages</strong> to auto-load images.
+          Follow the setup steps to get going!
+        </p>`;
+        return;
+      }
+
+      const { owner, repo } = ctx;
+
+      let files;
+      try {
+        const r = await fetch(
+          `https://api.github.com/repos/${owner}/${repo}/contents/images`,
+          { headers: { Accept: 'application/vnd.github.v3+json' } }
+        );
+        if (!r.ok) throw new Error('not found');
+        files = await r.json();
+      } catch {
+        grid.innerHTML = `<p class="empty-msg">
+          No <strong>images/</strong> folder found yet.<br><br>
+          Upload photos to the <strong>images/</strong> folder in your GitHub repo.<br>
+          Name them like <em>Jessica Biel.jpg</em> and they'll appear here automatically.
+        </p>`;
+        return;
+      }
+
+      const images = files
+        .filter(f => f.type === 'file' && /\.(jpg|jpeg|png|gif|webp|avif)$/i.test(f.name))
+        .sort((a, b) => a.name.localeCompare(b.name));
+
+      if (images.length === 0) {
+        grid.innerHTML = `<p class="empty-msg">
+          The <strong>images/</strong> folder is empty.<br><br>
+          Drag your photos into it on GitHub and they'll show up here.
+        </p>`;
+        return;
+      }
+
+      // Render cards immediately (no waiting for bios)
+      grid.innerHTML = '';
+      seymoreCount = 0;
+
+      for (const file of images) {
+        const { display, wikiName } = parseName(file.name);
+
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML = `
+          <img src="${file.download_url}" alt="${display}" class="card-img" loading="lazy">
+          <div class="card-body">
+            <div class="card-name">${display}</div>
+            <p class="card-bio"></p>
+          </div>`;
+        grid.appendChild(card);
+
+        // Fetch bio in background — fills in when ready
+        if (wikiName) {
+          fetchBio(wikiName).then(bio => {
+            const el = card.querySelector('.card-bio');
+            if (el && bio) el.textContent = bio;
+          });
+        }
+      }
+    }
+  </script>
+</body>
+</html>
